@@ -1,4 +1,4 @@
-Fun Python game for the Micro:Bit where the player must dodge lasers coming randomly from all sides via the built-in accelerometer.
+Fun Python game for the Micro:Bit where the player must dodge lasers coming randomly from all sides using the built-in accelerometer.
 What's your highscore?
 
 **How to install:**
