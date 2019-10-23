@@ -8,3 +8,4 @@ What's your highscore?
 **Controls:**
 
 * Use the accelerometer to move the LED 'cursor' on the Micro:Bit around and dodge incoming lasers.
+* When lost press A to restart.
