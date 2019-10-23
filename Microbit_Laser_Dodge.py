@@ -21,6 +21,7 @@ def removeEnemy(x, y):
     grid[y][x] = 0
 
 def moveEnemy():
+    #Top left corner
     if grid[0][0] == 5:
         displayEnemy(0, 0)
         for wait in range(25):
@@ -34,6 +35,7 @@ def moveEnemy():
                 updatePos()
             removeEnemy(pos, pos)
 
+    #Top right corner
     if grid[0][4] == 5:
         displayEnemy(4, 0)
         for wait in range(25):
@@ -47,6 +49,7 @@ def moveEnemy():
                 updatePos()
             removeEnemy(4-i, i)
 
+    #Bottom left corner
     if grid[4][0] == 5:
         displayEnemy(0, 4)
         for wait in range(25):
@@ -60,6 +63,7 @@ def moveEnemy():
                 updatePos()
             removeEnemy(i, 4-i)
 
+    #Bottom right corner
     if grid[4][4] == 5:
         displayEnemy(4, 4)
         for wait in range(25):
@@ -73,6 +77,7 @@ def moveEnemy():
                 updatePos()
             removeEnemy(pos, pos)
 
+    #Top row
     for i in range(1, 4):
         if grid[0][i] == 5:
             displayEnemy(i, 0)
@@ -87,6 +92,7 @@ def moveEnemy():
                     updatePos()
                 removeEnemy(i, pos)
 
+    #Bottom row
     for i in range(1, 4):
         if grid[4][i] == 5:
             displayEnemy(i, 4)
@@ -101,6 +107,7 @@ def moveEnemy():
                     updatePos()
                 removeEnemy(i, pos)
 
+    #Left side
     for i in range(1, 4):
         if grid[i][0] == 5:
             displayEnemy(0, i)
@@ -115,6 +122,7 @@ def moveEnemy():
                     updatePos()
                 removeEnemy(pos, i)
 
+    #Right side
     for i in range(1, 4):
         if grid[i][4] == 5:
             displayEnemy(4, i)
@@ -171,9 +179,6 @@ def updatePos():
     displayCursor(x, y)
 
 while True:
-    # for wait in range(100):
-    #     microbit.sleep(5)
-    #     updatePos()
     updatePos()
     createEnemy()
     moveEnemy()
