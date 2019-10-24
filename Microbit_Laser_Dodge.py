@@ -8,6 +8,10 @@ score = 0
 def getScore():
     return score
 
+def resetScore():
+    global score
+    score = 0
+
 def displayGrid():
     for i in range(len(grid)):
         for j in range(len(grid[i])):
@@ -48,7 +52,7 @@ def lost(x, y):
 
         if (microbit.button_a.was_pressed()):
             microbit.display.scroll("Score: " + str(getScore()), wait=True, loop=False)
-            score = 0
+            resetScore()
             gameLost = False
 
 def wait():
