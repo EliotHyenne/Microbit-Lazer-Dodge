@@ -45,10 +45,10 @@ def lost(x, y):
                 grid[i][j] = 9
         grid[y][x] = 0
         displayGrid()
-        microbit.sleep(250)
+        microbit.sleep(175)
         clearGrid()
         displayGrid()
-        microbit.sleep(250)
+        microbit.sleep(175)
 
         if (microbit.button_a.was_pressed()):
             microbit.display.scroll("Score: " + str(getScore()), wait=True, loop=False)
