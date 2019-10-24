@@ -2,139 +2,143 @@ import microbit
 import random
 
 grid = [[0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0]]
+gameLost = False
+score = 0
+
+def getScore():
+    return score
 
 def displayGrid():
     for i in range(len(grid)):
         for j in range(len(grid[i])):
             microbit.display.set_pixel(j, i, grid[i][j])
 
+def clearGrid():
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            grid[i][j] = 0;
+
 def displayCursor(x, y):
-    grid[y][x] = 9
-    displayGrid()
-    grid[y][x] = 0
+    if grid[y][x] == 0:
+        grid[y][x] = 9
+        displayGrid()
+        grid[y][x] = 0
+    else:
+        lost(x, y)
 
 def displayEnemy(x, y):
     grid[y][x] = 5
-    displayGrid()
 
 def removeEnemy(x, y):
     grid[y][x] = 0
+
+def lost(x, y):
+    gameLost = True
+
+    while gameLost:
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                grid[i][j] = 9
+        grid[y][x] = 0
+        displayGrid()
+        microbit.sleep(250)
+        clearGrid()
+        displayGrid()
+        microbit.sleep(250)
+
+        if (microbit.button_a.was_pressed()):
+            microbit.display.scroll("Score: " + str(getScore()), wait=True, loop=False)
+            score = 0
+            gameLost = False
+
+def wait():
+    for i in range(25):
+        microbit.sleep(5)
+        updatePos()
 
 def moveEnemy():
     #Top left corner
     if grid[0][0] == 5:
         displayEnemy(0, 0)
-        for wait in range(25):
-            microbit.sleep(5)
-            updatePos()
+        wait()
         removeEnemy(0, 0)
         for pos in range(1, 5):
             displayEnemy(pos, pos)
-            for wait in range(25):
-                microbit.sleep(5)
-                updatePos()
+            wait()
             removeEnemy(pos, pos)
 
     #Top right corner
     if grid[0][4] == 5:
         displayEnemy(4, 0)
-        for wait in range(25):
-            microbit.sleep(5)
-            updatePos()
+        wait()
         removeEnemy(4, 0)
         for i in range(1,5):
             displayEnemy(4-i, i)
-            for wait in range(25):
-                microbit.sleep(5)
-                updatePos()
+            wait()
             removeEnemy(4-i, i)
 
     #Bottom left corner
     if grid[4][0] == 5:
         displayEnemy(0, 4)
-        for wait in range(25):
-            microbit.sleep(5)
-            updatePos()
+        wait()
         removeEnemy(0, 4)
         for i in range(1,5):
             displayEnemy(i, 4-i)
-            for wait in range(25):
-                microbit.sleep(5)
-                updatePos()
+            wait()
             removeEnemy(i, 4-i)
 
     #Bottom right corner
     if grid[4][4] == 5:
         displayEnemy(4, 4)
-        for wait in range(25):
-            microbit.sleep(5)
-            updatePos()
+        wait()
         removeEnemy(4, 4)
         for pos in range(3, -1, -1):
             displayEnemy(pos, pos)
-            for wait in range(25):
-                microbit.sleep(5)
-                updatePos()
+            wait()
             removeEnemy(pos, pos)
 
     #Top row
     for i in range(1, 4):
         if grid[0][i] == 5:
             displayEnemy(i, 0)
-            for wait in range(25):
-                microbit.sleep(5)
-                updatePos()
+            wait()
             removeEnemy(i, 0)
             for pos in range(1, 5):
                 displayEnemy(i, pos)
-                for wait in range(25):
-                    microbit.sleep(5)
-                    updatePos()
+                wait()
                 removeEnemy(i, pos)
 
     #Bottom row
     for i in range(1, 4):
         if grid[4][i] == 5:
             displayEnemy(i, 4)
-            for wait in range(25):
-                microbit.sleep(5)
-                updatePos()
+            wait()
             removeEnemy(i, 4)
             for pos in range(3, -1, -1):
                 displayEnemy(i, pos)
-                for wait in range(25):
-                    microbit.sleep(5)
-                    updatePos()
+                wait()
                 removeEnemy(i, pos)
 
     #Left side
     for i in range(1, 4):
         if grid[i][0] == 5:
             displayEnemy(0, i)
-            for wait in range(25):
-                microbit.sleep(5)
-                updatePos()
+            wait()
             removeEnemy(0, i)
             for pos in range(1, 5):
                 displayEnemy(pos, i)
-                for wait in range(25):
-                    microbit.sleep(5)
-                    updatePos()
+                wait()
                 removeEnemy(pos, i)
 
     #Right side
     for i in range(1, 4):
         if grid[i][4] == 5:
             displayEnemy(4, i)
-            for wait in range(25):
-                microbit.sleep(5)
-                updatePos()
+            wait()
             removeEnemy(4, i)
             for pos in range(3, -1, -1):
                 displayEnemy(pos, i)
-                for wait in range(25):
-                    microbit.sleep(5)
-                    updatePos()
+                wait()
                 removeEnemy(pos, i)
 
 def createEnemy():
@@ -178,7 +182,8 @@ def updatePos():
 
     displayCursor(x, y)
 
-while True:
+while not gameLost:
     updatePos()
     createEnemy()
+    score += 1
     moveEnemy()
