@@ -5,7 +5,7 @@ What's your highscore?
 
 **How to install:**
 
-* Download and drag the Microbit_Lazer_Dodge.hex file to your Micro:Bit folder on your computer.
+* Download and drag the `Microbit-Lazer-Dodge.hex` file to your Micro:Bit folder on your computer.
 
 **Controls:**
 
